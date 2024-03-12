@@ -61,7 +61,7 @@ const checkout = ({ addToCart, cart, removeItemCart, subTotal, clearCart}) => {
         "description": "Test Transaction",
         "image": "https://m.media-amazon.com/images/I/51faXrq-8TL._SX679_.jpg",
         "order_id": json.order.id,
-        "callback_url": `http://localhost:3000/api/paymentverification`,
+        "callback_url": `${process.env.NEXT_PUBLIC_HOST_URL}/api/paymentverification`,
         "prefill": {
           "name": "Gaurav Kumar",
           "email": "gaurav.kumar@example.com",
