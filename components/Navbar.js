@@ -11,63 +11,42 @@ import Link from 'next/link';
 import { useRef, useState, useEffect } from 'react';
 
 const Navbar = ({addToCart, handleLogout, user, cart, removeItemCart, clearCart, subTotal}) => {
-  const ref = useRef()
-  const reff = useRef()
   const router = useRouter();
+
+  const [sidebar, setSidebar] = useState(false)
+  const [sidemenu, setSidemenu] = useState(false)
   const [dropdown, setDropdown] = useState(false);
   useEffect(() => {
     if(router.pathname=='/checkout'){
       handleCart();
     }
     if(router.pathname=='/hoodies'){
-      if(reff.current.classList.contains('translate-x-0')){
-        reff.current.classList.add('-translate-x-full');
-        reff.current.classList.remove('translate-x-0');
-      }
+      if(sidemenu)
+      handleNav()
     }
     if(router.pathname=='/tshirts'){
-      if(reff.current.classList.contains('translate-x-0')){
-        reff.current.classList.add('-translate-x-full');
-        reff.current.classList.remove('translate-x-0');
-      }
+      if(sidemenu)
+      handleNav()
     }
     if(router.pathname=='/mugs'){
-      if(reff.current.classList.contains('translate-x-0')){
-        reff.current.classList.add('-translate-x-full');
-        reff.current.classList.remove('translate-x-0');
-      }
+      if(sidemenu)
+      handleNav()
     }
     if(router.pathname=='/stickers'){
-      if(reff.current.classList.contains('translate-x-0')){
-        reff.current.classList.add('-translate-x-full');
-        reff.current.classList.remove('translate-x-0');
-      }
+      if(sidemenu)
+      handleNav()
     }
   }, [router.query]);
   
   const handleCart = () =>{
-    if(ref.current.classList.contains('translate-x-full')){
-      ref.current.classList.remove('translate-x-full');
-      ref.current.classList.add('translate-x-0');
-    }
-    else{
-      ref.current.classList.add('translate-x-full');
-      ref.current.classList.remove('translate-x-0');
-    }
+    setSidebar(!sidebar)
   }
   const handleNav = () =>{
-    if(reff.current.classList.contains('-translate-x-full')){
-      reff.current.classList.remove('-translate-x-full');
-      reff.current.classList.add('translate-x-0');
-    }
-    else{
-      reff.current.classList.add('-translate-x-full');
-      reff.current.classList.remove('translate-x-0');
-    }
+    setSidemenu(!sidemenu)
   }
 
   return (
-    <div className='nav flex bg-white justify-between items-center p-2 alg shadow-md sticky top-0  z-10 '>
+    <div  className={`nav flex bg-white justify-between items-center p-2 alg shadow-md sticky top-0  z-10 ${!sidebar && !sidemenu && !dropdown &&'overflow-hidden'} `}>
       <div onClick={handleNav} className="hamburger-icon md:hidden cursor-pointer">
       <GiHamburgerMenu className='text-xl'/>
       </div>
@@ -100,7 +79,7 @@ const Navbar = ({addToCart, handleLogout, user, cart, removeItemCart, clearCart,
         </div>
       </div>
       {/* sidebar  */}
-      <div ref={ref} className="sidebar bg-orange-300 w-72 h-screen absolute top-0 right-0 translate-x-full transform transition-transform">
+      <div className={`sidebar bg-orange-300 w-72 h-screen absolute top-0 ${sidebar?'right-0':'-right-72'} transition-all`}>
         <div className="header px-6  py-8 flex justify-center bg-orange-300 sticky top-0 ">
         <h1 className='text-xl font-semibold'>Shopping Cart</h1>
         <span className='absolute top-0 right-0 p-5 cursor-pointer text-xl'><IoCloseCircle onClick={handleCart}/></span>
@@ -132,7 +111,7 @@ const Navbar = ({addToCart, handleLogout, user, cart, removeItemCart, clearCart,
         </footer>}
       </div>
       {/* sidemenu  */}
-      <div ref={reff} className="sidebar md:hidden bg-orange-300 w-72 h-screen absolute top-0 left-0 -translate-x-full transform transition-transform">
+      <div className={`sidebar md:hidden bg-orange-300 w-72 h-screen absolute top-0 ${sidemenu?'left-0':'-left-72'}   transition-all`}>
         <div className="header px-6  py-8 flex justify-center bg-orange-300 sticky top-0 ">
         <h1 className='text-xl font-semibold'>MENU</h1>
         <span className='absolute top-0 right-0 p-5 cursor-pointer text-xl'><IoCloseCircle onClick={handleNav} /></span>
